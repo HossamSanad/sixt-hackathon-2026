@@ -1,0 +1,23 @@
+Noise in the history: {'dispersion_median': 1.1466113989637303, 'rel_std_median': 0.20193513500014276, 'cells': 280}
+Backtest, mean abs error forecasting a held-out week (lower is better): {'raw': 5.846, 'pooled': 5.691, 'blend_half': 5.698, 'blend_full': 5.716}
+
+== Evaluation on 100 fresh random futures (mean profit; plans within 2 SE are a tie)
+                    plan  valid  on_forecast      mean    se  added  removed  transferred  transfer_cost
+           stoch_polish2   True    4,154,803 4,107,424 4,077     28      220          751         90,544
+            stoch_polish   True    4,152,144 4,105,457 4,106     28      212          743         89,848
+         stoch_make_plan   True    4,128,191 4,084,408 4,177     48      200          674         84,512
+stoch_joint_upcell_blend   True    4,118,622 4,077,025 4,244     48      187          676         82,475
+       stoch_joint_up0.5   True    4,073,682 4,026,317 4,083     65      190          665         78,687
+             stoch_joint   True    4,035,587 3,989,811 3,922     11      231          982        155,666
+        stoch_joint_long   True    4,008,769 3,966,078 3,756     20      233          884        140,696
+       stoch_joint_up0.0   True    3,999,128 3,947,852 3,790     66      176          581         76,681
+            stoch_pooled   True    3,932,479 3,881,842 3,619    105      222          338         34,258
+                 det_raw   True    3,925,069 3,864,902 3,610    105      222          371         38,604
+              det_pooled   True    3,918,518 3,860,454 3,634    104      220          359         36,866
+         det_pooled_x0.9   True    3,887,236 3,837,421 3,540    100      224          336         34,682
+         det_pooled_x0.8   True    3,869,332 3,822,484 3,491     91      233          345         35,856
+                baseline   True    3,173,937 3,140,007 3,297     96        0            0              0
+              do-nothing   True    3,057,212 3,025,408 3,094      0        0            0              0
+
+Best: stoch_polish2  (mean 4,107,424 +- 4,077) -> solution/best_plan.csv
+Total 1s. Nothing was submitted.

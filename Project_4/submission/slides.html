@@ -54,7 +54,7 @@
       <h3 style="margin-top:0.25in">What the data says</h3>
       <ul>
         <li>Airports peak Thursday, downtown peaks Saturday (1.44× the weekly mean). Every station follows its type's weekday shape.</li>
-        <li>Noise is Poisson-like (variance / mean = 1.15), independent across stations, day-correlated within a station (rentals last 2.9 days).</li>
+        <li>Noise is Poisson with ~40 % extra variance (variance / mean 1.38), independent across stations, day-correlated within a station (rentals last 2.9 days).</li>
         <li>Downtown rentals earn 7–9 % more per car-day than airport rentals, in every category.</li>
       </ul>
     </div>
@@ -103,7 +103,7 @@
         <li>Adds, removals, transfers per station/category/day, trucks per route/day (PuLP + CBC).</li>
         <li>Appendix A as constraints: fleet ≥ committed, caps, free capacity = max(0, util × fleet − committed), upgrades from the next category, 8 cars per truck.</li>
         <li><b>Upgrade value = probability the higher category really has a free car</b> at that station and day (≈1.0 premium→midsize at Marlow Airport, ≈0.3 midsize→compact).</li>
-        <li>Two-phase warm start from per-category models; 10 minutes.</li>
+        <li><b>Referee polish</b> on top: edits kept only if unseen futures confirm them (+23 k).</li>
       </ul>
     </div></div>
   </div>
@@ -113,13 +113,13 @@
 
 <!-- 3 -->
 <div class="slide">
-  <h1>Results: +30 % over the baseline plan</h1>
+  <h1>Results: +31 % over the baseline plan</h1>
   <h2>Mean profit over 100 random futures never used to build any plan (same futures for every plan, so differences are paired; standard error ≈ 4 k)</h2>
   <div class="kpi">
-    <div><b>4,084,408</b><span>final plan, mean profit</span></div>
-    <div><b>+944 k</b><span>over the organisers' baseline (3,140,007), +30 %</span></div>
-    <div><b>+1.06 M</b><span>over doing nothing (3,025,408)</span></div>
-    <div><b>4,128,191</b><span>profit on the forecast itself</span></div>
+    <div><b>4,107,424</b><span>submitted plan, mean profit</span></div>
+    <div><b>+967 k</b><span>over the organisers' baseline (3,140,007), +31 %</span></div>
+    <div><b>+1.08 M</b><span>over doing nothing (3,025,408)</span></div>
+    <div><b>4,154,803</b><span>profit on the forecast itself</span></div>
   </div>
   <table>
     <tr><th>Plan</th><th>What it tests</th><th class="num">Mean profit</th><th style="width:3.6in"></th></tr>
@@ -130,7 +130,8 @@
     <tr><td>expected revenue, per category</td><td>uncertainty in the model</td><td class="num">3,881,842</td><td><span class="bar" style="width:2.50in"></span></td></tr>
     <tr><td>joint model, upgrades trusted 100 %</td><td>Level 3: upgrades + trucks</td><td class="num">3,989,811</td><td><span class="bar" style="width:2.82in"></span></td></tr>
     <tr><td>joint model, upgrades at 50 %</td><td>a global discount</td><td class="num">4,026,317</td><td><span class="bar" style="width:2.93in"></span></td></tr>
-    <tr class="win"><td>joint model, per-cell upgrade probability</td><td>final, output of make_plan.py</td><td class="num">4,084,408</td><td><span class="bar win" style="width:3.10in"></span></td></tr>
+    <tr><td>joint model, per-cell upgrade probability</td><td>model plan, make_plan.py</td><td class="num">4,084,408</td><td><span class="bar" style="width:3.10in"></span></td></tr>
+    <tr class="win"><td>model plan + referee polish</td><td>real rules, unseen futures</td><td class="num">4,107,424</td><td><span class="bar win" style="width:3.17in"></span></td></tr>
   </table>
   <p class="small" style="margin-top:0.15in">Bars start at 3.0 M. Variants with upgrades at 0 %, 25 %, 75 % and longer solver runs are in SUBMISSION.md; none beat the final plan. Measured with a local re-implementation of Appendix A, not the official scorer.</p>
   <div class="footer"><span>solution/results.md · variants/*.csv</span><span>3 / 5</span></div>
@@ -139,31 +140,32 @@
 <!-- 4 -->
 <div class="slide">
   <h1>What the plan does, and does it hold up?</h1>
-  <h2>48 cars added (none midsize or premium), 200 removed (midsize and premium at their caps), 674 transferred, 99 % by truck, transfer cost 85 k</h2>
+  <h2>28 cars added (21 economy, 7 compact), 220 removed (midsize and premium at their caps, economy one below), 751 transferred, 99 % by truck, transfer cost 90.5 k</h2>
   <div class="cols">
     <div class="col">
       <h3>The moves</h3>
       <ul>
-        <li><b>Rebalance by truck in days 1–4</b>: Marlow Airport 690 → 264 cars by day 14, Fairgrounds 359 → 101; Marlow Central +179, Old Quarter +147, Quayside +124, Highvale +89 / +93.</li>
-        <li><b>One way, not a shuttle</b>: 598 of 674 cars move in days 1–4 (414 airport → downtown, 257 downtown → downtown, 3 back), plus a 48-car top-up on days 11–12 before the second Saturday. Airports keep enough for their own Mon–Thu demand. A truck place on the 3 km airport → centre route costs about 87, against a car-day worth 240–540.</li>
+        <li><b>Rebalance by truck in days 1–4</b>: Marlow Airport 690 → 234 cars by day 14, Dunmere Airport 298 → 126, Fairgrounds 359 → 100; Marlow Central +173, Old Quarter +153, Quayside +133, Highvale +88, Lakeside +89.</li>
+        <li><b>One way, not a shuttle</b>: 634 of 751 cars move in days 1–4 (452 airport → downtown, 298 downtown → downtown, 1 back), plus 99 cars on days 10–12 before the second Saturday. Airports keep enough for their own Mon–Thu demand. A truck place on the 3 km airport → centre route costs about 87, against a car-day worth 240–540.</li>
         <li><b>Premium cars serve midsize demand</b> instead of buying the 18 midsize cars the cap allows.</li>
-        <li>Downtown is left short on the two Saturdays (67 % and 79 % served, 90–100 % on other days): by the price factors the last third of a peak day earns only 0.4–0.5 of the base price, less than holding and moving a car for one day.</li>
+        <li>Downtown is left short on the two Saturdays (67 % and 80 % served, 90–100 % on other days): by the price factors the last third of a peak day earns only 0.4–0.5 of the base price, less than holding and moving a car for one day.</li>
       </ul>
     </div>
     <div class="col">
       <h3>Robustness: first in every world</h3>
       <table>
-        <tr><th>How the hidden scenarios might be generated</th><th class="num">Final plan</th><th class="num">50 % plan</th></tr>
-        <tr><td>Poisson around the forecast</td><td class="num">4,096 k</td><td class="num">4,038 k</td></tr>
-        <tr><td>Whole fortnight shifted ±10 %</td><td class="num">4,084 k</td><td class="num">4,025 k</td></tr>
-        <tr><td>Demand 15 % below forecast everywhere</td><td class="num">3,599 k</td><td class="num">3,552 k</td></tr>
-        <tr><td>Demand 15 % above forecast everywhere</td><td class="num">4,489 k</td><td class="num">4,417 k</td></tr>
-        <tr><td>Booking-implied level (airports +11 %)</td><td class="num">4,230 k</td><td class="num">4,157 k</td></tr>
-        <tr><td>Simulated rentals, day-correlated noise</td><td class="num">3,929 k</td><td class="num">3,873 k</td></tr>
-        <tr><td>Simulated rentals at booking level</td><td class="num">4,028 k</td><td class="num">3,963 k</td></tr>
-        <tr><td>Fresh seed, 300 futures</td><td class="num">4,085 k</td><td class="num">4,027 k</td></tr>
+        <tr><th>How the hidden scenarios might be generated</th><th class="num">Submitted plan</th><th class="num">50 % plan</th></tr>
+        <tr><td>Poisson around the forecast</td><td class="num">4,120 k</td><td class="num">4,038 k</td></tr>
+        <tr><td>Poisson with the measured extra spread (var/mean 1.38)</td><td class="num">4,109 k</td><td class="num">4,027 k</td></tr>
+        <tr><td>Whole fortnight shifted ±10 %</td><td class="num">4,105 k</td><td class="num">4,025 k</td></tr>
+        <tr><td>Demand 15 % below forecast everywhere</td><td class="num">3,628 k</td><td class="num">3,552 k</td></tr>
+        <tr><td>Demand 15 % above forecast everywhere</td><td class="num">4,498 k</td><td class="num">4,417 k</td></tr>
+        <tr><td>Booking-implied level (airports +11 %)</td><td class="num">4,238 k</td><td class="num">4,157 k</td></tr>
+        <tr><td>Simulated rentals, day-correlated noise</td><td class="num">3,956 k</td><td class="num">3,873 k</td></tr>
+        <tr><td>Simulated rentals at booking level</td><td class="num">4,049 k</td><td class="num">3,963 k</td></tr>
+        <tr><td>Fresh seed, 300 futures</td><td class="num">4,107 k</td><td class="num">4,026 k</td></tr>
       </table>
-      <p class="small" style="margin-top:0.1in">Rebuilding the plan with finer revenue curves or on the historical forecast returned the same plan: a stable optimum, not a lucky draw. At the booking-implied demand level the airports still serve 98 % of their demand.</p>
+      <p class="small" style="margin-top:0.1in">Rebuilding the model plan with finer revenue curves, on the historical forecast, with the measured spread or with 20 solver minutes returned the same plan: a stable optimum, not a lucky draw. The referee polish then added 23 k on top, confirmed on 600 futures it never saw. At the booking-implied demand level the airports still serve 95 % of their demand.</p>
     </div>
   </div>
   <div class="footer"><span>solution/stress_test.py</span><span>4 / 5</span></div>
@@ -172,7 +174,7 @@
 <!-- 5 -->
 <div class="slide">
   <h1>What did not work, limits, next steps</h1>
-  <h2>Rebuild with one command: <code>python solution/make_plan.py</code> (Python 3.14, no API keys, data as shipped; time-limited solver, so another machine may return a slightly different plan: the submitted one is in <code>plans/</code>)</h2>
+  <h2>Rebuild: <code>python solution/make_plan.py</code>, then <code>polish.py</code> twice (Python 3.14, no API keys, data as shipped; time-limited solver, so another machine may return a slightly different model plan: the submitted one is <code>plans/final.csv</code>)</h2>
   <div class="cols">
     <div class="col"><div class="box">
       <h3>Did not work</h3>
@@ -186,7 +188,7 @@
     <div class="col"><div class="box">
       <h3>Limits</h3>
       <ul>
-        <li>Profits above come from our re-implementation of Appendix A. The official feedback round scored the same plan at 4,096,594 on the public scenario, with all four cost lines matching to the cent.</li>
+        <li>Profits above come from our re-implementation of Appendix A. The official feedback round scored the model plan at 4,096,594 and the polished plan at 4,112,935 on the public scenario, all cost lines matching to the cent.</li>
         <li>The joint model stops at a time limit with a small gap (about 1 %).</li>
         <li>Upgrade order in the model may differ slightly from the scorer's own-category-first rule.</li>
         <li>The forecast has no booking dynamics beyond the level signal.</li>

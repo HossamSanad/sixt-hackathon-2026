@@ -1,0 +1,6 @@
+    joint    warm start is worth 4,044,620 to the model
+    joint    status=TimeLimit  model objective=4,044,620  bound=4,087,504
+stoch_disp138: upgrade=cell forecast=blend futures=1000 disp=1.38 warm=stoch_make_plan 603s, 122 rows
+           plan  valid  on_forecast      mean    se  added  removed  transferred  transfer_cost
+  stoch_disp138   True    4,128,191 4,084,408 4,177     48      200          674         84,512
+stoch_make_plan   True    4,128,191 4,084,408 4,177     48      200          674         84,512

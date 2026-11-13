@@ -1,0 +1,20 @@
+poisson seed 123: 100 futures; final mean 4,107,424 worst 4,028,841
+   ahead of model plan      in 100/100; mean margin +23,017; worst margin +10,885
+   ahead of 50% plan        in 100/100; mean margin +81,107; worst margin +58,755
+   ahead of baseline        in 100/100; mean margin +967,418; worst margin +904,208
+   ahead of do-nothing      in 100/100; mean margin +1,082,016; worst margin +1,009,565
+fresh seed 2026: 300 futures; final mean 4,106,561 worst 3,971,053
+   ahead of model plan      in 300/300; mean margin +21,678; worst margin +5,054
+   ahead of 50% plan        in 300/300; mean margin +80,616; worst margin +63,188
+   ahead of baseline        in 300/300; mean margin +965,348; worst margin +903,633
+   ahead of do-nothing      in 300/300; mean margin +1,078,524; worst margin +1,011,621
+dispersion 1.38: 100 futures; final mean 4,102,441 worst 4,020,054
+   ahead of model plan      in 100/100; mean margin +22,519; worst margin +11,763
+   ahead of 50% plan        in 100/100; mean margin +81,749; worst margin +63,482
+   ahead of baseline        in 100/100; mean margin +970,316; worst margin +911,610
+   ahead of do-nothing      in 100/100; mean margin +1,082,071; worst margin +1,024,531
+simulated rentals: 100 futures; final mean 3,979,128 worst 3,811,304
+   ahead of model plan      in 100/100; mean margin +27,270; worst margin +16,091
+   ahead of 50% plan        in 100/100; mean margin +84,679; worst margin +70,576
+   ahead of baseline        in 100/100; mean margin +951,231; worst margin +839,595
+   ahead of do-nothing      in 100/100; mean margin +1,048,125; worst margin +917,497

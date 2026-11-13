@@ -1,0 +1,22 @@
+start stoch_polish: training mean 4,101,848 on 300 futures (seed 777); referee check OK
+sweep 1: 9463 candidates, accept 'new rem S01 compact d1 +4'  gain +262 (se 63)  training mean 4,102,110  [14s]
+sweep 2: 9466 candidates, accept 'tr S01->S04 compact d12 -4'  gain +261 (se 42)  training mean 4,102,371  [29s]
+sweep 3: 9466 candidates, accept 'tr S01->S04 compact d12 -4'  gain +301 (se 42)  training mean 4,102,672  [43s]
+sweep 4: 9466 candidates, accept 'new tr S03->S04 midsize d11 +8'  gain +452 (se 104)  training mean 4,103,123  [58s]
+sweep 5: 9471 candidates, accept 'rem S04 compact d8 +4'  gain +309 (se 38)  training mean 4,103,432  [73s]
+sweep 6: 9471 candidates, accept 'new tr S01->S03 premium d12 +8'  gain +297 (se 92)  training mean 4,103,729  [87s]
+sweep 7: 9476 candidates, no move passes the test; stop
+
+wrote variants/stoch_polish2.csv (130 rows). Independent checks (never used in the search):
+-- referee seed 123
+         plan  valid  on_forecast      mean    se  added  removed  transferred  transfer_cost
+stoch_polish2   True    4,154,803 4,107,424 4,077     28      220          751         90,544
+ stoch_polish   True    4,152,144 4,105,457 4,106     28      212          743         89,848
+-- fresh seed 2026
+         plan  valid  on_forecast      mean    se  added  removed  transferred  transfer_cost
+stoch_polish2   True    4,154,803 4,106,561 2,388     28      220          751         90,544
+ stoch_polish   True    4,152,144 4,104,727 2,398     28      212          743         89,848
+-- dispersion 1.38, seed 11
+         plan  valid  on_forecast      mean    se  added  removed  transferred  transfer_cost
+stoch_polish2   True    4,154,803 4,102,441 4,551     28      220          751         90,544
+ stoch_polish   True    4,152,144 4,100,556 4,562     28      212          743         89,848

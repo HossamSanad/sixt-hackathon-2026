@@ -1,8 +1,11 @@
-# Evaluation results (2026-11-13 12:04)
+# Evaluation results (2026-11-13 16:45, after the referee polish)
 
-## Ranking on 100 random futures (historical demand level, seed never used for building)
+## Ranking on 100 random futures (historical demand level, seed 123, never used for building or polishing)
 ```
+== Evaluation on 100 fresh random futures (mean profit; plans within 2 SE are a tie)
                     plan  valid  on_forecast      mean    se  added  removed  transferred  transfer_cost
+           stoch_polish2   True    4,154,803 4,107,424 4,077     28      220          751         90,544
+            stoch_polish   True    4,152,144 4,105,457 4,106     28      212          743         89,848
          stoch_make_plan   True    4,128,191 4,084,408 4,177     48      200          674         84,512
 stoch_joint_upcell_blend   True    4,118,622 4,077,025 4,244     48      187          676         82,475
        stoch_joint_up0.5   True    4,073,682 4,026,317 4,083     65      190          665         78,687
@@ -16,14 +19,16 @@ stoch_joint_upcell_blend   True    4,118,622 4,077,025 4,244     48      187    
          det_pooled_x0.8   True    3,869,332 3,822,484 3,491     91      233          345         35,856
                 baseline   True    3,173,937 3,140,007 3,297     96        0            0              0
               do-nothing   True    3,057,212 3,025,408 3,094      0        0            0              0
-Best: stoch_make_plan  (mean 4,084,408 +- 4,177) -> solution/best_plan.csv
-Total 0s. Nothing was submitted.
+
+Best: stoch_polish2  (mean 4,107,424 +- 4,077) -> solution/best_plan.csv
 ```
 
-## Stress test: seven ways of generating the hidden scenarios
+## Stress test: ten ways of generating the hidden scenarios
 ```
 == world: poisson_only
                     plan  valid  on_forecast      mean    se  added  removed  transferred  transfer_cost
+           stoch_polish2   True    4,154,803 4,120,006 3,695     28      220          751         90,544
+            stoch_polish   True    4,152,144 4,117,999 3,689     28      212          743         89,848
          stoch_make_plan   True    4,128,191 4,096,371 3,678     48      200          674         84,512
 stoch_joint_upcell_blend   True    4,118,622 4,089,180 3,670     48      187          676         82,475
        stoch_joint_up0.5   True    4,073,682 4,037,925 3,579     65      190          665         78,687
@@ -37,8 +42,11 @@ stoch_joint_upcell_blend   True    4,118,622 4,089,180 3,670     48      187    
          det_pooled_x0.8   True    3,869,332 3,831,427 2,983     91      233          345         35,856
                 baseline   True    3,173,937 3,148,176 2,740     96        0            0              0
               do-nothing   True    3,057,212 3,034,473 2,593      0        0            0              0
+
 == world: shared_shift
                     plan  valid  on_forecast      mean     se  added  removed  transferred  transfer_cost
+           stoch_polish2   True    4,154,803 4,105,076 27,556     28      220          751         90,544
+            stoch_polish   True    4,152,144 4,103,262 27,696     28      212          743         89,848
          stoch_make_plan   True    4,128,191 4,083,931 28,100     48      200          674         84,512
 stoch_joint_upcell_blend   True    4,118,622 4,075,961 28,265     48      187          676         82,475
        stoch_joint_up0.5   True    4,073,682 4,024,925 27,314     65      190          665         78,687
@@ -52,8 +60,11 @@ stoch_joint_upcell_blend   True    4,118,622 4,075,961 28,265     48      187   
          det_pooled_x0.8   True    3,869,332 3,820,960 20,410     91      233          345         35,856
                 baseline   True    3,173,937 3,139,709 16,636     96        0            0              0
               do-nothing   True    3,057,212 3,026,918 14,462      0        0            0              0
+
 == world: demand_-15%
                     plan  valid  on_forecast      mean    se  added  removed  transferred  transfer_cost
+           stoch_polish2   True    4,154,803 3,627,535 4,136     28      220          751         90,544
+            stoch_polish   True    4,152,144 3,623,755 4,148     28      212          743         89,848
          stoch_make_plan   True    4,128,191 3,598,945 4,104     48      200          674         84,512
 stoch_joint_upcell_blend   True    4,118,622 3,589,666 4,203     48      187          676         82,475
              stoch_joint   True    4,035,587 3,552,704 4,013     11      231          982        155,666
@@ -67,8 +78,11 @@ stoch_joint_upcell_blend   True    4,118,622 3,589,666 4,203     48      187    
          det_pooled_x0.8   True    3,869,332 3,461,547 3,467     91      233          345         35,856
                 baseline   True    3,173,937 2,849,373 3,099     96        0            0              0
               do-nothing   True    3,057,212 2,774,818 2,837      0        0            0              0
+
 == world: demand_+15%
                     plan  valid  on_forecast      mean    se  added  removed  transferred  transfer_cost
+            stoch_polish   True    4,152,144 4,499,001 4,056     28      212          743         89,848
+           stoch_polish2   True    4,154,803 4,497,711 4,014     28      220          751         90,544
          stoch_make_plan   True    4,128,191 4,488,796 4,186     48      200          674         84,512
 stoch_joint_upcell_blend   True    4,118,622 4,486,008 4,212     48      187          676         82,475
        stoch_joint_up0.5   True    4,073,682 4,416,725 4,073     65      190          665         78,687
@@ -82,8 +96,11 @@ stoch_joint_upcell_blend   True    4,118,622 4,486,008 4,212     48      187    
          det_pooled_x0.8   True    3,869,332 4,108,389 3,541     91      233          345         35,856
                 baseline   True    3,173,937 3,385,696 3,377     96        0            0              0
               do-nothing   True    3,057,212 3,241,706 3,148      0        0            0              0
+
 == world: booking_level
                     plan  valid  on_forecast      mean    se  added  removed  transferred  transfer_cost
+            stoch_polish   True    4,152,144 4,238,223 4,017     28      212          743         89,848
+           stoch_polish2   True    4,154,803 4,237,632 4,010     28      220          751         90,544
          stoch_make_plan   True    4,128,191 4,230,123 4,112     48      200          674         84,512
 stoch_joint_upcell_blend   True    4,118,622 4,224,612 4,288     48      187          676         82,475
        stoch_joint_up0.5   True    4,073,682 4,156,709 4,099     65      190          665         78,687
@@ -97,8 +114,11 @@ stoch_joint_upcell_blend   True    4,118,622 4,224,612 4,288     48      187    
          det_pooled_x0.8   True    3,869,332 3,944,446 3,107     91      233          345         35,856
                 baseline   True    3,173,937 3,306,988 3,149     96        0            0              0
               do-nothing   True    3,057,212 3,193,248 2,907      0        0            0              0
+
 == world: rental_sim
                     plan  valid  on_forecast      mean    se  added  removed  transferred  transfer_cost
+           stoch_polish2   True    4,154,803 3,956,330 6,232     28      220          751         90,544
+            stoch_polish   True    4,152,144 3,953,510 6,261     28      212          743         89,848
          stoch_make_plan   True    4,128,191 3,929,387 6,217     48      200          674         84,512
 stoch_joint_upcell_blend   True    4,118,622 3,919,384 6,172     48      187          676         82,475
        stoch_joint_up0.5   True    4,073,682 3,872,991 6,169     65      190          665         78,687
@@ -112,8 +132,11 @@ stoch_joint_upcell_blend   True    4,118,622 3,919,384 6,172     48      187    
          det_pooled_x0.8   True    3,869,332 3,675,128 4,719     91      233          345         35,856
                 baseline   True    3,173,937 3,009,918 4,395     96        0            0              0
               do-nothing   True    3,057,212 2,914,584 4,228      0        0            0              0
+
 == world: rental_sim_booking
                     plan  valid  on_forecast      mean    se  added  removed  transferred  transfer_cost
+           stoch_polish2   True    4,154,803 4,048,862 5,825     28      220          751         90,544
+            stoch_polish   True    4,152,144 4,047,615 5,904     28      212          743         89,848
          stoch_make_plan   True    4,128,191 4,028,270 5,964     48      200          674         84,512
 stoch_joint_upcell_blend   True    4,118,622 4,020,229 6,015     48      187          676         82,475
        stoch_joint_up0.5   True    4,073,682 3,962,955 5,802     65      190          665         78,687
@@ -127,12 +150,94 @@ stoch_joint_upcell_blend   True    4,118,622 4,020,229 6,015     48      187    
          det_pooled_x0.8   True    3,869,332 3,760,540 4,614     91      233          345         35,856
                 baseline   True    3,173,937 3,118,722 4,537     96        0            0              0
               do-nothing   True    3,057,212 3,023,162 4,195      0        0            0              0
+
+== world: overdispersed_1.38
+                    plan  valid  on_forecast      mean    se  added  removed  transferred  transfer_cost
+           stoch_polish2   True    4,154,803 4,108,835 4,569     28      220          751         90,544
+            stoch_polish   True    4,152,144 4,106,888 4,580     28      212          743         89,848
+         stoch_make_plan   True    4,128,191 4,086,779 4,548     48      200          674         84,512
+stoch_joint_upcell_blend   True    4,118,622 4,078,982 4,645     48      187          676         82,475
+       stoch_joint_up0.5   True    4,073,682 4,027,230 4,513     65      190          665         78,687
+             stoch_joint   True    4,035,587 3,991,502 4,387     11      231          982        155,666
+        stoch_joint_long   True    4,008,769 3,965,975 4,403     20      233          884        140,696
+       stoch_joint_up0.0   True    3,999,128 3,948,219 4,211     66      176          581         76,681
+            stoch_pooled   True    3,932,479 3,879,780 3,885    105      222          338         34,258
+                 det_raw   True    3,925,069 3,859,852 3,715    105      222          371         38,604
+              det_pooled   True    3,918,518 3,856,830 3,808    104      220          359         36,866
+         det_pooled_x0.9   True    3,887,236 3,834,463 3,685    100      224          336         34,682
+         det_pooled_x0.8   True    3,869,332 3,819,287 3,609     91      233          345         35,856
+                baseline   True    3,173,937 3,138,016 3,337     96        0            0              0
+              do-nothing   True    3,057,212 3,025,663 3,120      0        0            0              0
+
+== world: overdispersed_1.8
+                    plan  valid  on_forecast      mean    se  added  removed  transferred  transfer_cost
+           stoch_polish2   True    4,154,803 4,085,448 4,118     28      220          751         90,544
+            stoch_polish   True    4,152,144 4,083,854 4,159     28      212          743         89,848
+         stoch_make_plan   True    4,128,191 4,064,240 4,200     48      200          674         84,512
+stoch_joint_upcell_blend   True    4,118,622 4,057,979 4,167     48      187          676         82,475
+       stoch_joint_up0.5   True    4,073,682 4,005,721 4,105     65      190          665         78,687
+             stoch_joint   True    4,035,587 3,969,835 3,965     11      231          982        155,666
+        stoch_joint_long   True    4,008,769 3,946,158 3,922     20      233          884        140,696
+       stoch_joint_up0.0   True    3,999,128 3,926,373 3,778     66      176          581         76,681
+            stoch_pooled   True    3,932,479 3,858,461 3,635    105      222          338         34,258
+                 det_raw   True    3,925,069 3,838,599 3,580    105      222          371         38,604
+              det_pooled   True    3,918,518 3,835,751 3,608    104      220          359         36,866
+         det_pooled_x0.9   True    3,887,236 3,812,738 3,546    100      224          336         34,682
+         det_pooled_x0.8   True    3,869,332 3,798,380 3,499     91      233          345         35,856
+                baseline   True    3,173,937 3,121,043 3,286     96        0            0              0
+              do-nothing   True    3,057,212 3,010,050 3,143      0        0            0              0
+
+== world: overdispersed_2.5
+                    plan  valid  on_forecast      mean    se  added  removed  transferred  transfer_cost
+           stoch_polish2   True    4,154,803 4,061,701 5,081     28      220          751         90,544
+            stoch_polish   True    4,152,144 4,060,297 5,090     28      212          743         89,848
+         stoch_make_plan   True    4,128,191 4,041,778 5,138     48      200          674         84,512
+stoch_joint_upcell_blend   True    4,118,622 4,035,991 5,259     48      187          676         82,475
+       stoch_joint_up0.5   True    4,073,682 3,983,284 5,171     65      190          665         78,687
+             stoch_joint   True    4,035,587 3,949,160 4,935     11      231          982        155,666
+        stoch_joint_long   True    4,008,769 3,922,999 5,044     20      233          884        140,696
+       stoch_joint_up0.0   True    3,999,128 3,901,164 4,784     66      176          581         76,681
+            stoch_pooled   True    3,932,479 3,833,376 4,348    105      222          338         34,258
+                 det_raw   True    3,925,069 3,810,461 4,190    105      222          371         38,604
+              det_pooled   True    3,918,518 3,809,727 4,248    104      220          359         36,866
+         det_pooled_x0.9   True    3,887,236 3,787,293 4,160    100      224          336         34,682
+         det_pooled_x0.8   True    3,869,332 3,773,124 4,116     91      233          345         35,856
+                baseline   True    3,173,937 3,105,901 3,742     96        0            0              0
+              do-nothing   True    3,057,212 2,998,664 3,595      0        0            0              0
+
 First place (plans within 2 SE of the top) per world:
-  poisson_only   ['stoch_make_plan', 'stoch_joint_upcell_blend']
-  shared_shift   ['stoch_make_plan', 'stoch_joint_upcell_blend']
-  demand_-15%    ['stoch_make_plan']
-  demand_+15%    ['stoch_make_plan', 'stoch_joint_upcell_blend']
-  booking_level  ['stoch_make_plan', 'stoch_joint_upcell_blend']
-  rental_sim     ['stoch_make_plan', 'stoch_joint_upcell_blend']
-  rental_sim_booking ['stoch_make_plan', 'stoch_joint_upcell_blend']
+  poisson_only   ['stoch_polish2', 'stoch_polish']
+  shared_shift   ['stoch_polish2', 'stoch_polish', 'stoch_make_plan', 'stoch_joint_upcell_blend']
+  demand_-15%    ['stoch_polish2', 'stoch_polish']
+  demand_+15%    ['stoch_polish', 'stoch_polish2']
+  booking_level  ['stoch_polish', 'stoch_polish2']
+  rental_sim     ['stoch_polish2', 'stoch_polish']
+  rental_sim_booking ['stoch_polish2', 'stoch_polish']
+  overdispersed_1.38 ['stoch_polish2', 'stoch_polish']
+  overdispersed_1.8 ['stoch_polish2', 'stoch_polish']
+  overdispersed_2.5 ['stoch_polish2', 'stoch_polish']
+```
+
+## Draw by draw: the submitted plan against four alternatives on 600 individual futures
+```
+poisson seed 123: 100 futures; final mean 4,107,424 worst 4,028,841
+   ahead of model plan      in 100/100; mean margin +23,017; worst margin +10,885
+   ahead of 50% plan        in 100/100; mean margin +81,107; worst margin +58,755
+   ahead of baseline        in 100/100; mean margin +967,418; worst margin +904,208
+   ahead of do-nothing      in 100/100; mean margin +1,082,016; worst margin +1,009,565
+fresh seed 2026: 300 futures; final mean 4,106,561 worst 3,971,053
+   ahead of model plan      in 300/300; mean margin +21,678; worst margin +5,054
+   ahead of 50% plan        in 300/300; mean margin +80,616; worst margin +63,188
+   ahead of baseline        in 300/300; mean margin +965,348; worst margin +903,633
+   ahead of do-nothing      in 300/300; mean margin +1,078,524; worst margin +1,011,621
+dispersion 1.38: 100 futures; final mean 4,102,441 worst 4,020,054
+   ahead of model plan      in 100/100; mean margin +22,519; worst margin +11,763
+   ahead of 50% plan        in 100/100; mean margin +81,749; worst margin +63,482
+   ahead of baseline        in 100/100; mean margin +970,316; worst margin +911,610
+   ahead of do-nothing      in 100/100; mean margin +1,082,071; worst margin +1,024,531
+simulated rentals: 100 futures; final mean 3,979,128 worst 3,811,304
+   ahead of model plan      in 100/100; mean margin +27,270; worst margin +16,091
+   ahead of 50% plan        in 100/100; mean margin +84,679; worst margin +70,576
+   ahead of baseline        in 100/100; mean margin +951,231; worst margin +839,595
+   ahead of do-nothing      in 100/100; mean margin +1,048,125; worst margin +917,497
 ```

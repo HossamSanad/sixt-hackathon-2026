@@ -9,6 +9,8 @@ Here every plan in variants/ is re-scored under other assumptions about the hidd
   booking_level  demand at the level implied by the bookings on file (airports ~+11 %)
   rental_sim     simulated rentals (day-correlated noise), historical level
   rental_sim_booking  simulated rentals at the booking-implied level
+  overdispersed_X  gamma-Poisson counts with variance / mean = X (1.38 is the value measured in the history
+                   with the index-of-dispersion test; 1.8 and 2.5 are harsher than anything observed)
 A plan that is first or tied-first everywhere is a safe choice. Run from Project_4/ after experiments.py.
 """
 
@@ -32,6 +34,17 @@ def shared_shift_scenarios(D, n, seed, sigma=0.10):
     return out
 
 
+def overdispersed_scenarios(D, n, seed, disp, base_sigma=0.025):
+    """Gamma-Poisson (negative binomial) counts around the forecast with variance / mean = disp."""
+    rng = np.random.default_rng(seed)
+    out = []
+    for _ in range(n):
+        rate = rng.gamma(np.maximum(D.demand / (disp - 1), 1e-9), disp - 1) if disp > 1 else D.demand
+        base = D.base * rng.lognormal(-base_sigma**2 / 2, base_sigma, D.base.shape)
+        out.append((rng.poisson(rate).astype(float), base))
+    return out
+
+
 def main():
     D = load()
     plans = {"do-nothing": pd.DataFrame(columns=COLS), "baseline": baseline_plan(instance=D.inst)}
@@ -47,6 +60,10 @@ def main():
         # simulated rentals: day-correlated noise like the history, historical level
         "rental_sim": make_rental_scenarios(D, 100, seed=23),
         "rental_sim_booking": make_rental_scenarios(D, 100, seed=29, level=D.level_mult),
+        # the measured spread of the history and two harsher ones
+        "overdispersed_1.38": overdispersed_scenarios(D, 100, seed=11, disp=1.38),
+        "overdispersed_1.8": overdispersed_scenarios(D, 100, seed=11, disp=1.8),
+        "overdispersed_2.5": overdispersed_scenarios(D, 100, seed=11, disp=2.5),
     }
     summary = {}
     for name, scen in worlds.items():

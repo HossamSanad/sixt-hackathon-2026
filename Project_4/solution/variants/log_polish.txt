@@ -1,0 +1,44 @@
+start stoch_make_plan: training mean 4,089,035 on 200 futures (seed 555); referee check OK
+sweep 1: 9489 candidates, accept 'tr S06->S10 midsize d1 +4'  gain +2,547 (se 77)  training mean 4,091,582  [10s]
+sweep 2: 9489 candidates, accept 'rem S06 economy d1 +4'  gain +1,809 (se 49)  training mean 4,093,392  [20s]
+sweep 3: 9438 candidates, accept 'new tr S01->S04 economy d1 +8'  gain +1,595 (se 140)  training mean 4,094,987  [30s]
+sweep 4: 9442 candidates, accept 'add S10 compact d5 -4'  gain +1,121 (se 54)  training mean 4,096,108  [41s]
+sweep 5: 9442 candidates, accept 'new tr S01->S03 premium d3 +8'  gain +949 (se 130)  training mean 4,097,056  [51s]
+sweep 6: 9447 candidates, accept 'tr S06->S08 midsize d1 +2'  gain +876 (se 31)  training mean 4,097,932  [61s]
+sweep 7: 9448 candidates, accept 'add S10 compact d5 -4'  gain +831 (se 57)  training mean 4,098,764  [71s]
+sweep 8: 9448 candidates, accept 'new tr S03->S04 midsize d10 +8'  gain +789 (se 117)  training mean 4,099,553  [81s]
+sweep 9: 9453 candidates, accept 'tr S01->S04 compact d11->d12'  gain +767 (se 63)  training mean 4,100,320  [91s]
+sweep 10: 9458 candidates, accept 'tr S02->S01 compact d7 -2'  gain +629 (se 37)  training mean 4,100,949  [101s]
+sweep 11: 9456 candidates, accept 'tr S05->S09 premium d2 +2'  gain +620 (se 49)  training mean 4,101,569  [111s]
+sweep 12: 9456 candidates, accept 'tr S05->S03 midsize d6 -2'  gain +686 (se 32)  training mean 4,102,255  [121s]
+sweep 13: 9454 candidates, accept 'tr S05->S08 midsize d1 -1'  gain +504 (se 17)  training mean 4,102,759  [131s]
+sweep 14: 9456 candidates, accept 'tr S05->S09 midsize d2 +1'  gain +614 (se 22)  training mean 4,103,374  [141s]
+sweep 15: 9456 candidates, accept 'add S09 compact d5 -4'  gain +541 (se 61)  training mean 4,103,914  [151s]
+sweep 16: 9456 candidates, accept 'tr S06->S08 economy d1 +4'  gain +493 (se 72)  training mean 4,104,407  [160s]
+sweep 17: 9456 candidates, accept 'add S10 compact d5 -4'  gain +466 (se 58)  training mean 4,104,873  [170s]
+sweep 18: 9456 candidates, accept 'new tr S02->S10 midsize d10 +8'  gain +542 (se 121)  training mean 4,105,415  [180s]
+sweep 19: 9461 candidates, accept 'new tr S01->S02 premium d3 +8'  gain +595 (se 129)  training mean 4,106,010  [189s]
+sweep 20: 9466 candidates, accept 'add S10 compact d5 -4'  gain +513 (se 58)  training mean 4,106,522  [198s]
+sweep 21: 9460 candidates, accept 'new tr S02->S04 midsize d10 +8'  gain +396 (se 113)  training mean 4,106,918  [208s]
+sweep 22: 9465 candidates, accept 'new tr S04->S03 compact d10 +8'  gain +806 (se 108)  training mean 4,107,724  [218s]
+sweep 23: 9470 candidates, accept 'tr S05->S04 midsize d10 +2'  gain +361 (se 27)  training mean 4,108,085  [227s]
+sweep 24: 9471 candidates, accept 'new rem S04 compact d8 +4'  gain +413 (se 44)  training mean 4,108,498  [237s]
+sweep 25: 9474 candidates, accept 'new rem S07 compact d8 +4'  gain +342 (se 43)  training mean 4,108,841  [246s]
+sweep 26: 9477 candidates, accept 'new tr S06->S07 midsize d12 +4'  gain +296 (se 38)  training mean 4,109,136  [256s]
+sweep 27: 9482 candidates, accept 'tr S05->S04 midsize d10 +1'  gain +261 (se 12)  training mean 4,109,398  [266s]
+sweep 28: 9483 candidates, accept 'tr S05->S04 compact d10 -2'  gain +281 (se 23)  training mean 4,109,678  [276s]
+sweep 29: 9482 candidates, no move passes the test; stop
+
+wrote variants/stoch_polish.csv (128 rows). Independent checks (never used in the search):
+-- referee seed 123
+           plan  valid  on_forecast      mean    se  added  removed  transferred  transfer_cost
+   stoch_polish   True    4,152,144 4,105,457 4,106     28      212          743         89,848
+stoch_make_plan   True    4,128,191 4,084,408 4,177     48      200          674         84,512
+-- fresh seed 2026
+           plan  valid  on_forecast      mean    se  added  removed  transferred  transfer_cost
+   stoch_polish   True    4,152,144 4,104,727 2,398     28      212          743         89,848
+stoch_make_plan   True    4,128,191 4,084,883 2,461     48      200          674         84,512
+-- dispersion 1.38, seed 11
+           plan  valid  on_forecast      mean    se  added  removed  transferred  transfer_cost
+   stoch_polish   True    4,152,144 4,100,556 4,562     28      212          743         89,848
+stoch_make_plan   True    4,128,191 4,079,922 4,653     48      200          674         84,512

@@ -263,14 +263,18 @@ def noise_stats(D: Data) -> dict:
 
 
 def make_scenarios(D: Data, n: int, seed: int, level_sigma: float = 0.1, base_sigma: float = 0.025,
-                   demand: np.ndarray | None = None) -> list[tuple[np.ndarray, np.ndarray]]:
-    """Random futures: Poisson car counts around the forecast, with a little extra level noise so the
-    variance-to-mean ratio matches the history (about 1.15), and a small wobble on base revenue."""
+                   demand: np.ndarray | None = None, disp: float | None = None) -> list[tuple[np.ndarray, np.ndarray]]:
+    """Random futures: Poisson car counts around the forecast, with a little extra level noise (variance-to-mean
+    about 1.25 pooled), and a small wobble on base revenue. With `disp`, gamma-Poisson counts with
+    variance / mean = disp instead (the history measures 1.38 with the index-of-dispersion test)."""
     rng = np.random.default_rng(seed)
     mean = D.demand if demand is None else demand
     out = []
     for _ in range(n):
-        rate = mean * rng.lognormal(-level_sigma**2 / 2, level_sigma, mean.shape)
+        if disp is not None and disp > 1:
+            rate = rng.gamma(np.maximum(mean / (disp - 1), 1e-9), disp - 1)
+        else:
+            rate = mean * rng.lognormal(-level_sigma**2 / 2, level_sigma, mean.shape)
         dem = rng.poisson(rate).astype(float)
         base = D.base * rng.lognormal(-base_sigma**2 / 2, base_sigma, D.base.shape)
         out.append((dem, base))
