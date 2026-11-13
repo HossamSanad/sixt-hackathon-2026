@@ -1,0 +1,5 @@
+    joint    status=TimeLimit  model objective=3,652,199  bound=3,707,852
+upgrade_value=0.0: 605s, 151 rows
+             plan  valid  on_forecast      mean    se  added  removed  transferred  transfer_cost
+      stoch_joint   True    4,035,587 3,989,811 3,922     11      231          934        155,666
+stoch_joint_up0.0   True    3,999,128 3,947,852 3,790     66      176          569         76,681

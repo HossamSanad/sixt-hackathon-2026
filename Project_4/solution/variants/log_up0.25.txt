@@ -1,0 +1,6 @@
+    joint    warm start is worth 3,665,653 to the model
+    joint    status=TimeLimit  model objective=73,307  bound=3,710,314
+stoch_joint_up0.25: upgrade=0.25 forecast=pooled 618s, 108 rows
+              plan  valid  on_forecast      mean    se  added  removed  transferred  transfer_cost
+stoch_joint_up0.25   True    4,073,682 4,026,317 4,083     65      190          665         78,687
+ stoch_joint_up0.5   True    4,073,682 4,026,317 4,083     65      190          665         78,687

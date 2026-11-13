@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Bugfather - Project 4 slides</title>
+<style>
+  @page { size: 13.333in 7.5in; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; font-family: Helvetica, Arial, sans-serif; color: #1a1a1a; }
+  .slide { width: 13.333in; height: 7.5in; padding: 0.55in 0.7in 0.45in 0.7in; page-break-after: always; position: relative; background: #fff; overflow: hidden; }
+  .slide:last-child { page-break-after: auto; }
+  h1 { font-size: 30pt; margin: 0 0 0.12in 0; letter-spacing: -0.3pt; }
+  h2 { font-size: 15pt; margin: 0 0 0.25in 0; color: #555; font-weight: normal; }
+  h3 { font-size: 14pt; margin: 0 0 0.1in 0; color: #c84b00; text-transform: uppercase; letter-spacing: 0.6pt; }
+  p, li, td, th { font-size: 12.5pt; line-height: 1.35; }
+  ul { margin: 0.05in 0 0 0.2in; padding: 0; }
+  li { margin-bottom: 0.06in; }
+  .cols { display: flex; gap: 0.35in; }
+  .col { flex: 1; }
+  .box { border: 1.5px solid #ddd; border-radius: 6px; padding: 0.18in 0.22in; height: 100%; }
+  .accent { background: #fff4ec; border-color: #f2b58a; }
+  .big { font-size: 40pt; font-weight: bold; color: #c84b00; line-height: 1; margin: 0.05in 0; }
+  .small { font-size: 10.5pt; color: #666; }
+  table { border-collapse: collapse; width: 100%; }
+  th { text-align: left; border-bottom: 2px solid #333; padding: 0.04in 0.08in; font-size: 11.5pt; }
+  td { border-bottom: 1px solid #e3e3e3; padding: 0.045in 0.08in; font-size: 11.5pt; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr.win td { background: #fff4ec; font-weight: bold; }
+  .bar { height: 0.17in; background: #bbb; border-radius: 2px; display: inline-block; vertical-align: middle; }
+  .bar.win { background: #c84b00; }
+  .footer { position: absolute; bottom: 0.3in; left: 0.7in; right: 0.7in; font-size: 9.5pt; color: #888; display: flex; justify-content: space-between; }
+  .kpi { display: flex; gap: 0.3in; margin: 0.15in 0 0.25in 0; }
+  .kpi div { flex: 1; border-left: 4px solid #c84b00; padding-left: 0.15in; }
+  .kpi b { display: block; font-size: 22pt; }
+  .kpi span { font-size: 11pt; color: #555; }
+  code { font-family: Menlo, monospace; font-size: 10.5pt; background: #f3f3f3; padding: 1px 4px; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- 1 -->
+<div class="slide">
+  <h1>Right car, right station, next 14 days</h1>
+  <h2>Project 4, Fleet Allocation Challenge &nbsp;·&nbsp; Team <b>The Bugfather</b> (solo) &nbsp;·&nbsp; SIXT Hackathon, 13 November 2026</h2>
+  <div class="cols">
+    <div class="col">
+      <h3>The task</h3>
+      <ul>
+        <li>10 stations, 4 car categories, 14 days, 2,357 cars.</li>
+        <li>Decide <b>additions</b> (455 each), <b>removals</b> (save 50–123 holding per day) and <b>transfers</b> by driver or truck (1–2 days, cars earn nothing in transit).</li>
+        <li>Future demand is unknown: estimate it from 8 weeks of rentals.</li>
+        <li>Scored on the <b>mean profit over 30 hidden demand scenarios</b>. An invalid plan ranks last.</li>
+      </ul>
+      <h3 style="margin-top:0.25in">What the data says</h3>
+      <ul>
+        <li>Airports peak Thursday, downtown peaks Saturday (1.44× the weekly mean). Every station follows its type's weekday shape.</li>
+        <li>Noise is Poisson-like (variance / mean = 1.15), independent across stations, day-correlated within a station (rentals last 2.9 days).</li>
+        <li>Downtown rentals earn 7–9 % more per car-day than airport rentals, in every category.</li>
+      </ul>
+    </div>
+    <div class="col">
+      <div class="box accent">
+        <h3>This instance is a premium problem</h3>
+        <table>
+          <tr><th></th><th class="num">Economy</th><th class="num">Compact</th><th class="num">Midsize</th><th class="num">Premium</th></tr>
+          <tr><td>Fleet on day 1</td><td class="num">673</td><td class="num">639</td><td class="num">378</td><td class="num"><b>667</b></td></tr>
+          <tr><td>Cars needed, average day</td><td class="num">605</td><td class="num">619</td><td class="num">414</td><td class="num"><b>252</b></td></tr>
+          <tr><td>Removal cap</td><td class="num">67</td><td class="num">63</td><td class="num">37</td><td class="num"><b>66</b></td></tr>
+          <tr><td>Addition cap</td><td class="num">33</td><td class="num">31</td><td class="num"><b>18</b></td><td class="num">33</td></tr>
+        </table>
+        <p style="margin-top:0.15in">~400 premium cars too many (300 needed even on the peak day; 379 at Marlow Airport, which needs 69 on an average day) and only 66 may be removed. The rest cost 123 a day unless they <b>serve midsize demand as upgrades</b>. Midsize is short and may add only 18.</p>
+        <p class="small">Marlow Airport holds 690 cars for a need of about 250; Fairgrounds 359 for about 100; the four downtown Marlow stations 3 km away are short.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span>github.com/HossamSanad/sixt-hackathon-2026 · Project_4/SUBMISSION.md</span><span>1 / 5</span></div>
+</div>
+
+<!-- 2 -->
+<div class="slide">
+  <h1>Method: know, price the uncertainty, decide</h1>
+  <h2>One pipeline, everything per station × category × day; plans are judged by an independent re-implementation of the scoring rules, never by the solver's own objective</h2>
+  <div class="cols">
+    <div class="col"><div class="box">
+      <h3>1 · Know and forecast</h3>
+      <ul>
+        <li><b>Level 0</b>: committed cars, one-way moves, station fleet per day. All 10 check values match.</li>
+        <li><b>Forecast</b>: cars on rent per weekday, shape pooled per station type, level per station. No trend (−0.3 %/week).</li>
+        <li><b>Bookings on file</b> as a leading indicator: airports are booking 8–11 % above their usual pace (estimator-dependent), downtown is on pace. It did not backtest, so it is a <i>stress case</i>, not a bet.</li>
+      </ul>
+    </div></div>
+    <div class="col"><div class="box accent">
+      <h3>2 · Price the uncertainty</h3>
+      <ul>
+        <li>Expected revenue of the <i>k</i>-th car at a station, averaged over <b>1,000 random futures</b> (Poisson around the forecast).</li>
+        <li>Still a concave staircase of revenue "buckets", so the model does not grow, but the last cars are worth only the <b>probability they get used</b>.</li>
+        <li>Level 4 built into Levels 1–3. Beats naive "plan for 90 %" shading, which <b>lost 25–40 k</b>.</li>
+      </ul>
+    </div></div>
+    <div class="col"><div class="box">
+      <h3>3 · Decide with one MILP</h3>
+      <ul>
+        <li>Adds, removals, transfers per station/category/day, trucks per route/day (PuLP + CBC).</li>
+        <li>Appendix A as constraints: fleet ≥ committed, caps, free capacity = max(0, util × fleet − committed), upgrades from the next category, 8 cars per truck.</li>
+        <li><b>Upgrade value = probability the higher category really has a free car</b> at that station and day (≈1.0 premium→midsize at Marlow Airport, ≈0.3 midsize→compact).</li>
+        <li>Two-phase warm start from per-category models; 10 minutes.</li>
+      </ul>
+    </div></div>
+  </div>
+  <p class="small" style="margin-top:0.25in">Why a probability and not trust: trusting upgrades fully made the model move ~980 cars to exploit "free" premium cars that are not always free; ignoring upgrades threw revenue away. A 25-minute solve of the trusting model scored <i>lower</i> than a 10-minute one: the model was over-optimistic and a longer search exploits that.</p>
+  <div class="footer"><span>solution/common.py · solve.py · make_plan.py</span><span>2 / 5</span></div>
+</div>
+
+<!-- 3 -->
+<div class="slide">
+  <h1>Results: +30 % over the baseline plan</h1>
+  <h2>Mean profit over 100 random futures never used to build any plan (same futures for every plan, so differences are paired; standard error ≈ 4 k)</h2>
+  <div class="kpi">
+    <div><b>4,084,408</b><span>final plan, mean profit</span></div>
+    <div><b>+944 k</b><span>over the organisers' baseline (3,140,007), +30 %</span></div>
+    <div><b>+1.06 M</b><span>over doing nothing (3,025,408)</span></div>
+    <div><b>4,128,191</b><span>profit on the forecast itself</span></div>
+  </div>
+  <table>
+    <tr><th>Plan</th><th>What it tests</th><th class="num">Mean profit</th><th style="width:3.6in"></th></tr>
+    <tr><td>do-nothing</td><td>reference</td><td class="num">3,025,408</td><td><span class="bar" style="width:0.10in"></span></td></tr>
+    <tr><td>baseline (organisers' rule)</td><td>reference</td><td class="num">3,140,007</td><td><span class="bar" style="width:0.42in"></span></td></tr>
+    <tr><td>one forecast, per category</td><td>plain Level 1–2 model</td><td class="num">3,864,902</td><td><span class="bar" style="width:2.45in"></span></td></tr>
+    <tr><td>forecast × 0.9 / × 0.8</td><td>naive robustness by shading</td><td class="num">3,837,421 / 3,822,484</td><td><span class="bar" style="width:2.37in"></span></td></tr>
+    <tr><td>expected revenue, per category</td><td>uncertainty in the model</td><td class="num">3,881,842</td><td><span class="bar" style="width:2.50in"></span></td></tr>
+    <tr><td>joint model, upgrades trusted 100 %</td><td>Level 3: upgrades + trucks</td><td class="num">3,989,811</td><td><span class="bar" style="width:2.82in"></span></td></tr>
+    <tr><td>joint model, upgrades at 50 %</td><td>a global discount</td><td class="num">4,026,317</td><td><span class="bar" style="width:2.93in"></span></td></tr>
+    <tr class="win"><td>joint model, per-cell upgrade probability</td><td>final, output of make_plan.py</td><td class="num">4,084,408</td><td><span class="bar win" style="width:3.10in"></span></td></tr>
+  </table>
+  <p class="small" style="margin-top:0.15in">Bars start at 3.0 M. Variants with upgrades at 0 %, 25 %, 75 % and longer solver runs are in SUBMISSION.md; none beat the final plan. Measured with a local re-implementation of Appendix A, not the official scorer.</p>
+  <div class="footer"><span>solution/results.md · variants/*.csv</span><span>3 / 5</span></div>
+</div>
+
+<!-- 4 -->
+<div class="slide">
+  <h1>What the plan does, and does it hold up?</h1>
+  <h2>48 cars added (none midsize or premium), 200 removed (midsize and premium at their caps), 674 transferred, 99 % by truck, transfer cost 85 k</h2>
+  <div class="cols">
+    <div class="col">
+      <h3>The moves</h3>
+      <ul>
+        <li><b>Rebalance by truck in days 1–4</b>: Marlow Airport 690 → 264 cars by day 14, Fairgrounds 359 → 101; Marlow Central +179, Old Quarter +147, Quayside +124, Highvale +89 / +93.</li>
+        <li><b>One way, not a shuttle</b>: 598 of 674 cars move in days 1–4 (414 airport → downtown, 257 downtown → downtown, 3 back), plus a 48-car top-up on days 11–12 before the second Saturday. Airports keep enough for their own Mon–Thu demand. A truck place on the 3 km airport → centre route costs about 87, against a car-day worth 240–540.</li>
+        <li><b>Premium cars serve midsize demand</b> instead of buying the 18 midsize cars the cap allows.</li>
+        <li>Downtown is left short on the two Saturdays (67 % and 79 % served, 90–100 % on other days): by the price factors the last third of a peak day earns only 0.4–0.5 of the base price, less than holding and moving a car for one day.</li>
+      </ul>
+    </div>
+    <div class="col">
+      <h3>Robustness: first in every world</h3>
+      <table>
+        <tr><th>How the hidden scenarios might be generated</th><th class="num">Final plan</th><th class="num">50 % plan</th></tr>
+        <tr><td>Poisson around the forecast</td><td class="num">4,096 k</td><td class="num">4,038 k</td></tr>
+        <tr><td>Whole fortnight shifted ±10 %</td><td class="num">4,084 k</td><td class="num">4,025 k</td></tr>
+        <tr><td>Demand 15 % below forecast everywhere</td><td class="num">3,599 k</td><td class="num">3,552 k</td></tr>
+        <tr><td>Demand 15 % above forecast everywhere</td><td class="num">4,489 k</td><td class="num">4,417 k</td></tr>
+        <tr><td>Booking-implied level (airports +11 %)</td><td class="num">4,230 k</td><td class="num">4,157 k</td></tr>
+        <tr><td>Simulated rentals, day-correlated noise</td><td class="num">3,929 k</td><td class="num">3,873 k</td></tr>
+        <tr><td>Simulated rentals at booking level</td><td class="num">4,028 k</td><td class="num">3,963 k</td></tr>
+        <tr><td>Fresh seed, 300 futures</td><td class="num">4,085 k</td><td class="num">4,027 k</td></tr>
+      </table>
+      <p class="small" style="margin-top:0.1in">Rebuilding the plan with finer revenue curves or on the historical forecast returned the same plan: a stable optimum, not a lucky draw. At the booking-implied demand level the airports still serve 98 % of their demand.</p>
+    </div>
+  </div>
+  <div class="footer"><span>solution/stress_test.py</span><span>4 / 5</span></div>
+</div>
+
+<!-- 5 -->
+<div class="slide">
+  <h1>What did not work, limits, next steps</h1>
+  <h2>Rebuild with one command: <code>python solution/make_plan.py</code> (Python 3.14, no API keys, data as shipped; time-limited solver, so another machine may return a slightly different plan: the submitted one is in <code>plans/</code>)</h2>
+  <div class="cols">
+    <div class="col"><div class="box">
+      <h3>Did not work</h3>
+      <ul>
+        <li>Planning for 80–90 % of demand: −25 to −40 k. The revenue buckets already do this job, more precisely.</li>
+        <li>Booking pace as a forecast: no better than the weekday mean in a backtest. Kept as a stress case.</li>
+        <li>More solver time on an over-optimistic model: better for the model, worse for the scorer.</li>
+        <li>CBC with threads &gt; 1 returned values that did not match its own solution; a warm start with only the integer decisions started from a hollow solution. Both fixed.</li>
+      </ul>
+    </div></div>
+    <div class="col"><div class="box">
+      <h3>Limits</h3>
+      <ul>
+        <li>Profits above come from our re-implementation of Appendix A. The official feedback round scored the same plan at 4,096,594 on the public scenario, with all four cost lines matching to the cent.</li>
+        <li>The joint model stops at a time limit with a small gap (about 1 %).</li>
+        <li>Upgrade order in the model may differ slightly from the scorer's own-category-first rule.</li>
+        <li>The forecast has no booking dynamics beyond the level signal.</li>
+      </ul>
+    </div></div>
+    <div class="col"><div class="box accent">
+      <h3>Next steps, and for SIXT</h3>
+      <ul>
+        <li>Model upgrade capacity as a random quantity instead of a probability weight; faster solver (HiGHS).</li>
+        <li>Validate the booking-pace signal on more history; if it holds, use it as a live level adjustment.</li>
+        <li>The same model can run every morning on the live snapshot. The expected-revenue buckets are what make it safe to act on a forecast that is known to be noisy.</li>
+      </ul>
+    </div></div>
+  </div>
+  <div class="footer"><span>Team The Bugfather · github.com/HossamSanad/sixt-hackathon-2026</span><span>5 / 5</span></div>
+</div>
+
+</body>
+</html>
