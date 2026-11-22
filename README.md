@@ -42,6 +42,7 @@ Python · pandas · pandera (data validation) · PuLP / CBC (mixed-integer progr
 | `Project_4/SUBMISSION.md` | Full write-up: approach, model comparison, results, next steps | **me** |
 | `Project_4/data/`, `Project_4/fleetkit/` | Challenge data and starter package | SIXT hackathon organisers |
 | `CodeRabbit_Python/` | AI code-review config provided for all teams | SIXT hackathon organisers |
+| [`HACKATHON.md`](HACKATHON.md), `runbook/`, `assets/`, `Team + Topic List/`, `SUBMISSION_TEMPLATE.md`, `arxiv_templates/` | Original hackathon handbook, challenge overview and templates | SIXT hackathon organisers |
 
 ## Run it
 
